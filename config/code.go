@@ -1,0 +1,21 @@
+package config
+
+const (
+	ADMIN_STATUS_IGNORE  = -2 // 忽略用户状态
+	ADMIN_STATUS_FRZEEZE = 0
+	ADMIN_STATUS_NORMAL  = 1
+	ADMIN_STATUS_DELETED = -1
+
+	REQUEST_SUCCESS = 200
+	REQUEST_FAIL    = 200001
+	REQUEST_ERROR   = 502
+)
+
+var CODE_TITLE = map[int]string{
+	ADMIN_STATUS_FRZEEZE: "冻结",
+	ADMIN_STATUS_NORMAL:  "正常",
+	ADMIN_STATUS_DELETED: "删除",
+	REQUEST_SUCCESS:      "成功",
+	REQUEST_FAIL:         "失败",
+	REQUEST_ERROR:        "请求错误",
+}
