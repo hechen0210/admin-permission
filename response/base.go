@@ -3,7 +3,7 @@ package response
 import (
 	"admin-permission/config"
 
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 )
 
 type Response struct {
@@ -42,7 +42,9 @@ func (r *Response) Fail(ctx iris.Context) {
 		r.Code = config.REQUEST_FAIL
 	}
 	if r.Message == "" {
-		r.Message = config.CODE_TITLE[r.Code]
+		if message,ok := config.CODE_TITLE[r.Code]; ok {
+			r.Message = message
+		}
 	}
 	ctx.JSON(r)
 }

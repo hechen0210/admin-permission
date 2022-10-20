@@ -8,12 +8,12 @@ import (
 )
 
 type AdminRepository struct {
-	db         *gorm.DB
+	db *gorm.DB
 }
 
 func NewAdminRepository() *AdminRepository {
 	return &AdminRepository{
-		db:         config.GetDb(),
+		db: config.GetDb(),
 	}
 }
 
@@ -22,8 +22,12 @@ func (ar *AdminRepository) GetById(id int) (admin model.AdminModel, err error) {
 	return
 }
 
-func (ar *AdminRepository) GetByAccount(account string, status int) (admin model.AdminModel, err error) {
-	err = ar.db.Where("account = ?", account).First(&admin).Error
+func (ar *AdminRepository) GetByAccount(account string, status ...int) (admin model.AdminModel, err error) {
+	query := ar.db.Where("account = ?", account)
+	if len(status) > 0 && status[0] != config.ADMIN_STATUS_IGNORE {
+		query = query.Where("status in (?)", status)
+	}
+	err = query.First(&admin).Error
 	return
 }
 
